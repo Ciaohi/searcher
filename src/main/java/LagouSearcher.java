@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +26,7 @@ public class LagouSearcher {
         clickOptions(webDriver, "公司规模", "不限");
         clickOptions(webDriver, "行业领域", "移动互联网");
 
+
         //通过分页解析页面元素
         extractJobsByPagination(webDriver);
 
@@ -38,9 +40,10 @@ public class LagouSearcher {
         }
         //点击下一页
         WebElement nextPageBtn = webDriver.findElement(By.className("pager_next"));
+        JavascriptExecutor executor = (JavascriptExecutor)webDriver;
         //如果还有下一页的话点击下一页
         if(!nextPageBtn.getAttribute("class").contains("pager_next_disabled")){
-            nextPageBtn.click();
+            executor.executeScript("arguments[0].click();", nextPageBtn);
             System.out.println("解析下一页");
             try {
                 Thread.sleep(1000L);
